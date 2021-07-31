@@ -1,3 +1,4 @@
+const { response } = require('express');
 var express = require('express');
 var router = express.Router();
 const productHelpers = require('../helpers/product-helpers');
@@ -25,12 +26,12 @@ router.get("/signup", (req, res) => {
 })
 router.post("/signup", (req, res) => {
  
+ 
 
-  userHelpers.doSignup(req.body).then((response) => {
-    console.log(req.body.Password)
-    console.log(response); ////// stoped hereee!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
+  userHelpers.doSignup(req.body).then((response)=>{
+    console.log(response)
   })
 
 })
+
 module.exports = router;
