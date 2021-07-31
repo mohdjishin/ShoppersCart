@@ -1,5 +1,6 @@
 const { response } = require('express');
 var express = require('express');
+const { registerPartial } = require('hbs');
 var router = express.Router();
 const productHelpers = require('../helpers/product-helpers');
 const userHelpers = require("../helpers/user-helpers")
@@ -33,5 +34,15 @@ router.post("/signup", (req, res) => {
   })
 
 })
+router.post("/login",(req,res)=>{
+userHelpers.doLogin(req.body).then((response)=>{
 
+  if(response.status){
+    res.redirect("/")
+  }else{
+    res.redirect("/login")
+  }
+})
+
+})
 module.exports = router;
