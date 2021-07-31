@@ -22,7 +22,13 @@ router.get('/', function (req, res, next) {
   })
 });
 router.get("/login", (req, res) => {
-  res.render("user/login")
+  if(req.session.loggedIn){
+    res.redirect("/")
+  }else{
+
+  res.render("user/login",{"loginErr":req.session.loginErr})
+  req.session.loginErr=false
+  }
 })
 router.get("/signup", (req, res) => {
   res.render("user/signup")
@@ -44,6 +50,7 @@ userHelpers.doLogin(req.body).then((response)=>{
     req.session.user=response.user
     res.redirect("/")
   }else{
+    req.session.loginErr="Invalid login credentials."
     res.redirect("/login")
   }
 })
@@ -53,4 +60,5 @@ router.get("/logout",(req,res)=>{
   req.session.destroy() //used to clear session
   res.redirect("/")
 })
+
 module.exports = router;

@@ -3,7 +3,12 @@
   <div class="container mt-5 ">
     <h2 class="text-center">Login</h2>
 
+    {{#if loginErr}}
+    <p class="error">{{loginErr}}</p>
+
+    {{/if}}
     <div class="form-group">
+
       <label for="exampleInputEmail1">Email address</label>
       <input type="email" class="form-control" placeholder="Enter email" name="Email">
       <small class="form-text text-muted">We'll never share your email with anyone else.</small>
