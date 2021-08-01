@@ -28,21 +28,42 @@ router.post("/add-product", function (req, res) {
 
     image.mv("./public/product-images/" + id + ".jpeg", (err) => {  //saving
 
-      if (!err)
-        res.render("admin/add-product",{admin: true})
-      else
+      if (!err) {
+        res.render("admin/add-product", { admin: true })
+      } else {
         console.log(err);
+      }
     })
 
   })
 })
-router.get("/delete-product/:id",(req,res)=>{
+router.get("/delete-product/:id", (req, res) => {
 
-  let proId=req.params.id
+  let proId = req.params.id
   //console.log(proId)
-  productHelpers.deleteProduct(proId).then((response)=>{
+  productHelpers.deleteProduct(proId).then((response) => {
     res.redirect("/admin")
   })
 
+})
+router.get("/edit-product/:id", async (req, res) => {
+  let product = await productHelper.getProductDetails(req.params.id)
+  console.log(product);
+  res.render("admin/edit-product", { product })
+
+  //used to get datas
+
+})
+router.post("/edit-product/:id", (req, res) => {
+  console.log( req.params.id)
+  let id = req.params.id
+  productHelper.updateProduct(req.params.id, req.body).then(() => {
+    res.redirect("/admin")
+    if (req.files.Image) {
+      let image = req.files.Image
+      image.mv("./public/product-images/" + id + ".jpeg")
+
+    }
+  })
 })
 module.exports = router;

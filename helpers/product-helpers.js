@@ -33,7 +33,31 @@ module.exports = {
             })
         })
      
+    },
+    getProductDetails:(proId)=>{
+        return new Promise((resolve,reject)=>{
+            db.get().collection(collection.PRODUCT_COLLECTION).findOne({_id:ObjectId(proId)}).then((product)=>{
+                resolve(product)
+            })
+        })
+    },
+    updateProduct: (proId,ProductDetails)=>{
+        return new Promise((resolve,reject)=>{
+            db.get().collection(collection.PRODUCT_COLLECTION).updateOne({_id:ObjectId(proId)},{
+                $set:{
+                    Name:ProductDetails.Name,
+                    description:ProductDetails.description,
+                    Category:ProductDetails.Category,
+                    Price:ProductDetails.Price
+
+
+                }
+            }).then((response)=>{
+                resolve()
+            })
+        })
     }
+
     
 
 
